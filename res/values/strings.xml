@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, FruPic!</string>
+    <string name="app_name">FruPic</string>
+    <string name="sendVideo">send Video</string>
+    <string name="sendImage">send Image</string>
+    <string name="no_way_to_share_image">No Way to share Image</string>
+    <string name="no_way_to_share_video">No Way to share Video</string>
+</resources>
