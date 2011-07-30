@@ -25,15 +25,40 @@ public final class R {
         public static final int loading08=0x7f020008;
     }
     public static final class id {
-        public static final int imageURL=0x7f060001;
-        public static final int uploadDone=0x7f060000;
+        public static final int about_content_author=0x7f080000;
+        public static final int about_content_author_url=0x7f080001;
+        public static final int about_content_github=0x7f080002;
+        public static final int about_content_github_url=0x7f080003;
+        public static final int hello=0x7f080004;
+        public static final int imageURL=0x7f080007;
+        public static final int menu_about=0x7f080009;
+        public static final int menu_settings=0x7f080008;
+        public static final int uploadDone=0x7f080006;
+        public static final int welcome_text=0x7f080005;
     }
     public static final class layout {
-        public static final int main=0x7f030000;
+        public static final int about=0x7f030000;
+        public static final int main=0x7f030001;
+    }
+    public static final class menu {
+        public static final int menu=0x7f070000;
     }
     public static final class string {
-        public static final int app_name=0x7f050001;
-        public static final int hello=0x7f050000;
-        public static final int upload_done_image_url=0x7f050002;
+        public static final int about_author=0x7f06000b;
+        public static final int about_github=0x7f06000c;
+        public static final int about_label=0x7f060009;
+        public static final int about_title=0x7f06000a;
+        public static final int app_name=0x7f060001;
+        public static final int hello=0x7f060000;
+        public static final int settings_label=0x7f060007;
+        public static final int settings_title=0x7f060008;
+        public static final int upload_done_image_url=0x7f060003;
+        public static final int uploading=0x7f060004;
+        public static final int username=0x7f060005;
+        public static final int username_summary=0x7f060006;
+        public static final int welcome_text=0x7f060002;
+    }
+    public static final class xml {
+        public static final int settings=0x7f050000;
     }
 }

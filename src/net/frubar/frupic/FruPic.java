@@ -17,12 +17,18 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-public class FruPic extends Activity {
+public class FruPic extends Activity implements OnClickListener {
 	private static final String TAG = "FruPic";
 	final private String FruPicApi = "http://api.freamware.net/2.0/upload.picture";
 	private static String imageURL = "";
+	private String username = "";
 
 	/** Called when the activity is first created. */
 	@Override
@@ -31,8 +37,16 @@ public class FruPic extends Activity {
 		setContentView(R.layout.main);
 
 		Log.d(TAG, "onCreate()");
+
+		// retrieve the username 
+		username = Prefs.getUsername(this);
 		
-		// context foobar
+		// welcome the user
+		TextView tvHello = (TextView) findViewById(R.id.hello);
+		tvHello.setText( String.format(getString(R.string.hello), username ) );			
+
+		
+		// context stuff for the gallery
 		Intent intent = getIntent();
 		Bundle extras = intent.getExtras();
 		String action = intent.getAction();
@@ -48,29 +62,33 @@ public class FruPic extends Activity {
 					// Android ContentResolver interface
 					ContentResolver cr = getContentResolver();
 					InputStream is = cr.openInputStream(uri);
+					
 					// Get binary bytes for encode
 					byte[] data = getBytesFromFile(is);
-
+					
+					// upload the image
 					Log.d(TAG, "calling uploadImage()");
 					uploadImage(data);
 					
+					// upload done!
 					Log.d(TAG, "display some nice text");
-					// display some nice text
 					TextView tvUploadDone = (TextView) findViewById(R.id.uploadDone);
 					tvUploadDone.setText(R.string.upload_done_image_url);
+					
+					// hide the welcome text
+					TextView tvWelcomeText = (TextView) findViewById(R.id.welcome_text);
+					tvWelcomeText.setVisibility(TextView.INVISIBLE);
 					
 					// display the image url
 					TextView tvImageUrl = (TextView) findViewById(R.id.imageURL);
 					tvImageUrl.setText(
 				            Html.fromHtml( "<a href=\""+FruPic.imageURL+"\">"+FruPic.imageURL+"</a>" ) 
-							// FruPic.imageURL
 					);
 					tvImageUrl.setMovementMethod(LinkMovementMethod.getInstance());
 
-
 					return;
 				} catch (Exception e) {
-					Log.d(TAG, ">> Exception: " + e.getMessage());
+					Log.e(TAG, "Exception" , e);
 				}
 
 			} else if (extras.containsKey(Intent.EXTRA_TEXT)) {
@@ -79,6 +97,7 @@ public class FruPic extends Activity {
 		}
 	}
 
+	// the actual upload process
 	private String uploadImage(byte[] data) {
 		Log.d(TAG, "SendRequest()");
 		
@@ -91,10 +110,8 @@ public class FruPic extends Activity {
 	    String boundary =  "ForeverFrubarIWantToBe";
 
 		try {
-			Log.d(TAG, "Trying...");
 			URL url = new URL(this.FruPicApi);			
             conn = (HttpURLConnection) url.openConnection();
-
 			
 			// Create socket
             Log.d(TAG, "creating Socket");
@@ -102,25 +119,37 @@ public class FruPic extends Activity {
             conn = (HttpURLConnection) url.openConnection();
             conn.setDoInput(true);
             
-            //Output empfangen
+            // prepare output
             conn.setDoOutput(true);
             conn.setUseCaches(false);
  
-            //Verbindungseinstellungen
+            // begin the header
             Log.d(TAG, "beginning with header");
             conn.setRequestMethod("POST");
+            
             conn.setRequestProperty("Connection", "Keep-Alive");
             conn.setRequestProperty("Content-Type", "multipart/form-data;boundary="+boundary);
  
             dos = new DataOutputStream( conn.getOutputStream() );
-            dos.writeBytes(twoHyphens + boundary + lineEnd);
-            dos.writeBytes("Content-Disposition: form-data; name='file'; filename='"+ "frup0rn.png"+"'"+ lineEnd);
+            
+            // Tags
+            dos.writeBytes(lineEnd+twoHyphens+boundary+lineEnd);
+            dos.writeBytes("Content-Disposition: form-data;name='tags';");
+            dos.writeBytes(lineEnd+lineEnd+"via:Android;"+lineEnd+lineEnd+twoHyphens+boundary+lineEnd);
+            
+            // Username
+            if(!username.equals("")) {
+	            dos.writeBytes(lineEnd+twoHyphens+boundary+lineEnd);
+	            dos.writeBytes("Content-Disposition: form-data;name='username';");
+	            dos.writeBytes(lineEnd+lineEnd+username+";"+lineEnd+lineEnd+twoHyphens+boundary+lineEnd);
+            }
+            
+            dos.writeBytes("Content-Disposition: form-data;"+"name='file';"+"filename='frup0rn.png'"+lineEnd);
             dos.writeBytes(lineEnd);
 
             // sending the image byte by byte
             Log.d(TAG, "STARTING sending the image");
             for(byte var : data) {
-            	// Log.d(TAG, "sending a byte");
             	dos.writeByte(var);
             }
             Log.d(TAG, "FINISHED sending the image");
@@ -129,18 +158,17 @@ public class FruPic extends Activity {
             dos.writeBytes(lineEnd);
             dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
  
-            //Stream schliessen
-
+            // close the steram
             dos.flush();
             dos.close();   
 		}
         catch (MalformedURLException ex)
         {
-        	Log.e(this.getClass().getName(), ex.toString());
+        	Log.e(TAG, "Exception" , ex);
         }
         catch (IOException ioe)
         {
-        	Log.e(this.getClass().getName(), ioe.toString());
+        	Log.e(TAG, "Exception" , ioe);
         }
         
         // Reading Headers
@@ -164,7 +192,7 @@ public class FruPic extends Activity {
         	}
         } 
         catch (Exception e) {
-        	Log.d(TAG, ">> Exception: " + e.getMessage());
+        	Log.e(TAG, "Exception" , e);
         }      
         Log.d(TAG, "===== HEADER =====");
         
@@ -174,7 +202,7 @@ public class FruPic extends Activity {
         {        	
             inStream = new DataInputStream ( conn.getInputStream() );
       
-            String str;
+            String str = "";
             String output = "";
  
             while (( str = inStream.readLine()) != null)
@@ -190,12 +218,13 @@ public class FruPic extends Activity {
         }
         catch (IOException ioex)
         {
-        	Log.d(TAG, ">> Exception: " + ioex.getMessage());
+        	Log.e(TAG, "Exception" , ioex);
         }
         
         return FruPic.imageURL;
 	}
 
+	// reading a file byte by byte
 	public static byte[] getBytesFromFile(InputStream is) {
 		Log.d(TAG, "getBytesFromFile()");
 		try {
@@ -212,8 +241,42 @@ public class FruPic extends Activity {
 
 			return buffer.toByteArray();
 		} catch (IOException e) {
-			Log.d(TAG, ">> Exception: " + e.getMessage());
+			Log.e(TAG, "Exception" , e);
 			return null;
 		}
+	}
+	
+	// display menu
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu, menu);
+		return true;
+	}	
+	
+	// selected a menu item
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			// by clicking on the settings item
+			case R.id.menu_settings:
+				Log.d(TAG, "Starting Prefs()");
+				startActivity(new Intent(this, Prefs.class));
+				return true;
+
+			// by clicking on the about item
+			case R.id.menu_about:
+				Log.d(TAG, "Starting About()");
+				startActivity(new Intent(this, About.class));
+				return true;
+		}
+		return false;
+	   }
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
 	}
 }

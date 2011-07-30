@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="hello">Hello World, FruPic!</string>
+	<string name="hello">Hello  %1$s!</string>
 	<string name="app_name">FruPic</string>
+	<string name="welcome_text">\
+		To upload an Image, just select an Image in 
+		your Gallery and tap on the FruPic Icon from 
+		the <b>Sharing</b>-Menu.
+		
+		If you want, you can set a Name in the 
+		Settings-Menu to personalize your Images.
+	</string>
+	
 	<string name="upload_done_image_url">Upload done. The image url is:</string>
+	<string name="uploading">Uploading...</string>
+	<string name="username">Username</string>
+	<string name="username_summary">Optional</string>
+	
+	<string name="settings_label">Settings</string>
+	<string name="settings_title">FruPic settings</string>
+	
+	<string name="about_label">About</string>
+	<string name="about_title">About FruPic for Android</string>
+	<string name="about_author"><b>Author:</b> Rainer Hihn</string>
+	<string name="about_github"><b>Github:</b></string>
 </resources>
