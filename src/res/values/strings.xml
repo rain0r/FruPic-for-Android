@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-	<string name="hello">Hello World, FruPic!</string>
-	<string name="app_name">FruPic</string>
-	<string name="upload_done_image_url">Upload done. The image url is:</string>
-</resources>
