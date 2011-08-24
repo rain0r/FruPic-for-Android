@@ -31,9 +31,11 @@ public final class R {
         public static final int about_content_github_url=0x7f080003;
         public static final int hello=0x7f080004;
         public static final int imageURL=0x7f080007;
-        public static final int menu_about=0x7f080009;
-        public static final int menu_settings=0x7f080008;
+        public static final int menu_about=0x7f08000b;
+        public static final int menu_settings=0x7f08000a;
+        public static final int progress_bar=0x7f080008;
         public static final int uploadDone=0x7f080006;
+        public static final int uploading=0x7f080009;
         public static final int welcome_text=0x7f080005;
     }
     public static final class layout {
