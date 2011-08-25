@@ -42,32 +42,32 @@ public class FruPic extends Activity implements Runnable, OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		Log.d(TAG, "onCreate()");
+		// Log.d(TAG, "onCreate()");
 
 		// retrieve the username 
-		Log.d(TAG, "getUsername");
+		// Log.d(TAG, "getUsername");
 		this.username = Prefs.getUsername(this);
 		
 		// welcome the user
-		Log.d(TAG, "find Hello View");
+		// Log.d(TAG, "find Hello View");
 		TextView tvHello = (TextView) findViewById(R.id.hello);
 		tvHello.setText( String.format(getString(R.string.hello), this.username ) );	
 		
 		// context stuff for the gallery
-		Log.d(TAG, "getIntent()");
+		// Log.d(TAG, "getIntent()");
 		Intent intent = getIntent();
 		
-		Log.d(TAG, "getAction()");
+		// Log.d(TAG, "getAction()");
 		String action = intent.getAction();
 		
-		Log.d(TAG, "getExtras()");
+		// Log.d(TAG, "getExtras()");
 		Bundle extras = intent.getExtras();
 		
 		// if this is from the share menu
 		if (Intent.ACTION_SEND.equals(action)) {
 			
 			if (extras.containsKey(Intent.EXTRA_STREAM)) {
-				Log.d(TAG, "Context Menu");
+				// Log.d(TAG, "Context Menu");
 				
 				// Get resource path from intent callee
 				Uri uri = (Uri) extras.getParcelable(Intent.EXTRA_STREAM);										
@@ -86,16 +86,16 @@ public class FruPic extends Activity implements Runnable, OnClickListener {
 					this.imageData = getBytesFromFile(is);
 				}
 				catch (Exception e) {
-					Log.e(TAG, "Exception" , e);
+					// Log.e(TAG, "Exception" , e);
 				}        
 				
 				// maximum = bytes of the image
 				this.maximum = this.imageData.length;
-				Log.d(TAG, "the length of the byte array: "+this.maximum);
+				// Log.d(TAG, "the length of the byte array: "+this.maximum);
 				
 				// upload the image
 				/*
-				Log.d(TAG, "calling uploadImage()");
+				// Log.d(TAG, "calling uploadImage()");
 				try {
 					Upload u = new Upload(this);
 					Thread t = new Thread(u.uploadImage());
@@ -105,11 +105,11 @@ public class FruPic extends Activity implements Runnable, OnClickListener {
 					}
 				}
 				catch (Exception e) {
-					Log.e(TAG, "Exception" , e);
+					// Log.e(TAG, "Exception" , e);
 				}
 				*/
 				
-				Log.d(TAG, "Starting the thread");
+				// Log.d(TAG, "Starting the thread");
 				Thread thread = new Thread(this);
 				thread.start();
 				
@@ -125,7 +125,7 @@ public class FruPic extends Activity implements Runnable, OnClickListener {
 		this.pd.setIndeterminate(true);
         
         // set the progress to be horizontal
-		// this.pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		// this.pd.setProgressStyle(ProgressDia// Log.STYLE_HORIZONTAL);
         
         // reset the bar to the default value of 0
 		// this.pd.setProgress(0);
@@ -139,7 +139,7 @@ public class FruPic extends Activity implements Runnable, OnClickListener {
 	
 	// reading a file byte by byte
 	public static byte[] getBytesFromFile(InputStream is) {
-		Log.d(TAG, "getBytesFromFile()");
+		// Log.d(TAG, "getBytesFromFile()");
 		try {
 			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
@@ -154,7 +154,7 @@ public class FruPic extends Activity implements Runnable, OnClickListener {
 
 			return buffer.toByteArray();
 		} catch (IOException e) {
-			Log.e(TAG, "Exception" , e);
+			// Log.e(TAG, "Exception" , e);
 			return null;
 		}
 	}
@@ -174,13 +174,13 @@ public class FruPic extends Activity implements Runnable, OnClickListener {
 		switch (item.getItemId()) {
 			// by clicking on the settings item
 			case R.id.menu_settings:
-				Log.d(TAG, "Starting Prefs()");
+				// Log.d(TAG, "Starting Prefs()");
 				startActivity(new Intent(this, Prefs.class));
 				return true;
 
 			// by clicking on the about item
 			case R.id.menu_about:
-				Log.d(TAG, "Starting About()");
+				// Log.d(TAG, "Starting About()");
 				startActivity(new Intent(this, About.class));
 				return true;
 		}
@@ -197,7 +197,7 @@ public class FruPic extends Activity implements Runnable, OnClickListener {
 	public void run() {
 		// TODO Auto-generated method stub
 		Upload u = new Upload(this);
-		Log.d(TAG, "calling uploadImage()");
+		// Log.d(TAG, "calling uploadImage()");
 		u.uploadImage();
 		handler.sendEmptyMessage(0);
 	}
@@ -205,12 +205,11 @@ public class FruPic extends Activity implements Runnable, OnClickListener {
 	private Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-			Log.d(TAG, "dismiss the progress dialog");
+			// Log.d(TAG, "dismiss the progress dialog");
 			pd.dismiss();
 
 			// upload done!
-			// dialog.dismiss();
-			Log.d(TAG, "display some nice text");
+			// Log.d(TAG, "display some nice text");
 			TextView tvUploadDone = (TextView) findViewById(R.id.uploadDone);
 			tvUploadDone.setText(R.string.upload_done_image_url);
 			

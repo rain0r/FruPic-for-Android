@@ -15,7 +15,7 @@ public class About extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.about);
 
-    	Log.d(TAG, "About()");
+    	// Log.d(TAG, "About()");
 		String HihnOrgUrl = "https://hihn.org";
 		String GithubUrl = "https://github.com/rain0r/FruPic-for-Android";
 		
@@ -31,7 +31,7 @@ public class About extends Activity {
 			tvAboutGithubUrl.setMovementMethod(LinkMovementMethod.getInstance());
 		}
 		catch (Exception e) {
-			Log.e(TAG, "Exception" , e);
+			// Log.e(TAG, "Exception" , e);
 		}
 	}
 }
