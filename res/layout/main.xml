@@ -7,49 +7,23 @@
 	<TextView  
 	    android:text="@string/hello"
 	    android:id="@+id/hello"
-		android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:textColor="#ffffff"
+		style="@style/CodeFont"
 	    />
 
 	<TextView  
 	    android:text="@string/welcome_text"
 	    android:id="@+id/welcome_text"
-		android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:textColor="#ffffff"
-        android:paddingTop="0dp"
+		style="@style/CodeFont"
 	    />
 
 	<TextView
 		android:id="@+id/uploadDone"
-		android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-		android:textColor="#ffffff"
-        android:paddingTop="0dp"
+		style="@style/CodeFont"
 		/>
 	    
 	<TextView 
 		android:id="@+id/imageURL"
-		android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-		android:textSize="20dp"
+		style="@style/CodeFont"
 		/>
-	<ProgressBar 
-		android:id="@+id/progress_bar"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:visibility="invisible"
-		style="@android:style/Widget.ProgressBar.Horizontal"
-	/>	
-     <TextView
-     	android:id="@+id/uploading"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="@string/uploading"
-         android:visibility="invisible" 
-	/>		
+
 </LinearLayout>

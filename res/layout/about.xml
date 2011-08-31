@@ -5,42 +5,22 @@
     >
 
    <TextView
-	android:textSize="20dp"
-	android:textColor="#ffffff"
-	   
 	android:id="@+id/about_content_author"
 	android:text="@string/about_author"
-	
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
+	style="@style/CodeFont"
 	/>
    <TextView
-	android:textSize="20dp"
-	android:textColor="#ffffff"
-	   
 	android:id="@+id/about_content_author_url"
-	
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
+	style="@style/CodeFont"
 	/>
    <TextView
-	android:textSize="20dp"
-	android:textColor="#ffffff"
-	   
 	android:id="@+id/about_content_github"
 	android:text="@string/about_github"
-	
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
+	style="@style/CodeFont"
 	/>
    <TextView
-	android:textSize="20dp"
-	android:textColor="#ffffff"
-	   
 	android:id="@+id/about_content_github_url"
-	
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
+	style="@style/CodeFont"
 	/>
 	
 </LinearLayout>

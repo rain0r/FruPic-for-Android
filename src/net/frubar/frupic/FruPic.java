@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,7 +21,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.SlidingDrawer;
 import android.widget.TextView;
 
 public class FruPic extends Activity implements Runnable, OnClickListener {
@@ -92,26 +92,15 @@ public class FruPic extends Activity implements Runnable, OnClickListener {
 				// maximum = bytes of the image
 				this.maximum = this.imageData.length;
 				// Log.d(TAG, "the length of the byte array: "+this.maximum);
-				
-				// upload the image
-				/*
-				// Log.d(TAG, "calling uploadImage()");
+
+				// Log.d(TAG, "Starting the thread");
 				try {
-					Upload u = new Upload(this);
-					Thread t = new Thread(u.uploadImage());
-					
-					while (FruPic.increment < FruPic.maximum) {
-						t.start();
-					}
+					Thread thread = new Thread(this);
+					thread.start();
 				}
 				catch (Exception e) {
 					// Log.e(TAG, "Exception" , e);
 				}
-				*/
-				
-				// Log.d(TAG, "Starting the thread");
-				Thread thread = new Thread(this);
-				thread.start();
 				
 				return;
 			}	
@@ -123,17 +112,6 @@ public class FruPic extends Activity implements Runnable, OnClickListener {
 		this.pd.setCancelable(true);
 		this.pd.setMessage("Uploading...");
 		this.pd.setIndeterminate(true);
-        
-        // set the progress to be horizontal
-		// this.pd.setProgressStyle(ProgressDia// Log.STYLE_HORIZONTAL);
-        
-        // reset the bar to the default value of 0
-		// this.pd.setProgress(0);
-        
-        // set the maximum value
-		// this.pd.setMax(FruPic.maximum);
-        
-        // display the progressbar
 		this.pd.show();
 	}
 	
@@ -215,7 +193,7 @@ public class FruPic extends Activity implements Runnable, OnClickListener {
 			
 			// hide the welcome text
 			TextView tvWelcomeText = (TextView) findViewById(R.id.welcome_text);
-			tvWelcomeText.setVisibility(TextView.INVISIBLE);
+			tvWelcomeText.setText("");
 			
 			// display the image url
 			TextView tvImageUrl = (TextView) findViewById(R.id.imageURL);
@@ -225,4 +203,9 @@ public class FruPic extends Activity implements Runnable, OnClickListener {
 			tvImageUrl.setMovementMethod(LinkMovementMethod.getInstance());
 		}
 	};
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	    super.onConfigurationChanged(newConfig);
+	}
 }

@@ -1,6 +1,7 @@
 package net.frubar.frupic;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -21,4 +22,9 @@ public class Prefs extends PreferenceActivity {
       return PreferenceManager.getDefaultSharedPreferences(context)
             .getString(OPT_USERNAME, OPT_USERNAME_DEF);
    }
+   
+   @Override
+   public void onConfigurationChanged(Configuration newConfig) {
+       super.onConfigurationChanged(newConfig);
+   }   
 }

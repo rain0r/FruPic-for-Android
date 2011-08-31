@@ -1,6 +1,7 @@
 package net.frubar.frupic;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -34,4 +35,9 @@ public class About extends Activity {
 			// Log.e(TAG, "Exception" , e);
 		}
 	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	    super.onConfigurationChanged(newConfig);
+	}	
 }
